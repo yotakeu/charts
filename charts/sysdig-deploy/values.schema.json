@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "sysdig-deploy chart validation schema",
+  "required": [
+    "global"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "global": {
+      "type": "object",
+      "required": [
+        "clusterConfig",
+        "sysdig"
+      ],
+      "items": {
+        "clusterConfig": {
+          "type": "object",
+          "description": "Globally relevant cluster configuration",
+          "markdownDescription": "**clusterConfig** (array<object>) _required_\n\nGlobally relevant cluster configuration",
+          "required": [
+            "name"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 1,
+              "description": "This value is will be what the Sysdig components will report as the name of the cluster",
+              "markdownDescription": "**** (string) _required_\n\nThis value is will be what the Sysdig components will report as the name of the cluster"
+            }
+          }
+        }
+      }
+    },
+    "admissionController": {
+      "type": "object",
+      "description": "Location to specify Admission Controller chart enablement",
+      "markdownDescription": "**admissionController** (array<object>) _required_\n\nLocation to specify Admission Controller chart enablement"
+    },
+    "agent": {
+      "type": "object",
+      "description": "Location to specify agent chart enablement",
+      "markdownDescription": "**agent** (array<object>) _required_\n\nLocation to specify agent chart enablement"
+    },
+    "nodeAnalyzer": {
+      "type": "object",
+      "description": "Location to specify Node Analyzer chart enablement",
+      "markdownDescription": "**nodeAnalyzer** (array<object>) _required_\n\nLocation to specify Node Analyzer chart enablement"
+    },
+    "rapidResponse": {
+      "type": "object",
+      "description": "Location to specify Rapid Response chart enablement",
+      "markdownDescription": "**rapidResponse** (array<object>) _required_\n\nLocation to specify Rapid Response chart enablement"
+    }
+  }
+}
