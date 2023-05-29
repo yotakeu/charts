@@ -1,0 +1,51 @@
+# manifest.yaml
+name: Update docker images
+
+# Defines how to get "source" information such as Jenkins version
+sources:
+  agent-image-registry:
+    name: Get the registry image for the agent
+    kind: yaml
+    spec:
+      file: "charts/agent/values.yaml"
+      key: "image.registry"
+
+  agent-image-repository:
+    name: Get the registry image for the agent
+    kind: yaml
+    spec:
+      file: "charts/agent/values.yaml"
+      key: "image.repository"
+
+  agent-version:
+    name: Get latest version from image registry
+    kind: dockerimage
+    spec:
+      image: '{{ source "agent-image-registry" }}/{{ source "agent-image-repository" }}'
+      versionFilter:
+        kind: semver
+        strict: true
+    dependson:
+      - agent-image-registry
+      - agent-image-repository
+
+# Defines "conditions" required to update targets
+# conditions:
+#   dockerimage:
+#     name: Is Jenkins weekly tag published on DockerHub
+#     kind: dockerimage
+#     spec:
+#       image: jenkins/jenkins
+
+# Defines "targets" which need to be updated if different than "source" information.
+targets:
+  agent-chart:
+    name: "Update agent helm chart"
+    kind: "helmchart"
+    spec:
+      name: "charts/agent"
+      file: "values.yaml"
+      key: "image.tag"
+      versionincrement: "minor"
+    # scmid: "helm-charts"
+    sourceid: "agent-version"

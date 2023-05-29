@@ -1,0 +1,9 @@
+# manifest.yaml
+name: Update docker images
+
+# Defines how to get "source" information such as Jenkins version
+autodiscovery:
+  crawlers:
+    helm:
+      # only:
+      #   - path: 
